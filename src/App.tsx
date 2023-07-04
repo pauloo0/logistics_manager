@@ -1,10 +1,11 @@
 import React from 'react'
+import Driver from './pages/Driver'
 
 const App: React.FC = () => {
   return (
-    <div>
-      <p>Hello World</p>
-    </div>
+    <>
+      <Driver />
+    </>
   )
 }
 
