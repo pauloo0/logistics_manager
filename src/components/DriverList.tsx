@@ -1,31 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Driver } from '../types/Driver'
+import { baseUri } from '../utils/api'
 
 const DriverList: React.FC = () => {
-  const drivers: Driver[] = [
-    {
-      id: 1,
-      name: 'Lewis Hamilton',
-      birthday: '1985-01-07',
-      country: 'United Kingdom',
-    },
-    {
-      id: 2,
-      name: 'Max Verstappen',
-      birthday: '1997-09-30',
-      country: 'Netherlands',
-    },
-    {
-      id: 3,
-      name: 'Lando Norris',
-      birthday: '1999-11-13',
-      country: 'United Kingdom',
-    },
-  ]
+  const url = `${baseUri}/drivers`
+  const [drivers, setDrivers] = useState<Driver[]>([])
+
+  useEffect(() => {
+    const fetchDrivers = async () => {
+      const res = await fetch(url)
+      const data = await res.json()
+      setDrivers(data)
+    }
+    fetchDrivers()
+  }, [url])
 
   return (
     <>
-      <button className='bg-green-400'>Create</button>
+      <button className='bg-gradient-to-r from-green-700 from-[13%] via-yellow-300 via-[36%] to-red-600 to-60%'>
+        Create
+      </button>
 
       <table className='w-full'>
         <thead>
@@ -54,7 +48,7 @@ const DriverList: React.FC = () => {
         </tbody>
       </table>
 
-      <button className='w-full p-1 text-sm font-bold text-white bg-slate-300 '>
+      <button className='w-full p-1 text-sm font-bold text-white bg-gradient-to-r from-green-700 from-[13%] via-yellow-300 via-[36%] to-red-600 to-60%'>
         Create driver
       </button>
     </>
