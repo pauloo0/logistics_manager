@@ -2,7 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { Driver } from '../types/Driver'
 import { baseUri } from '../utils/api'
 
-const DriverList: React.FC = () => {
+interface DriverListProps {
+  onCreateClick: () => void
+}
+
+const DriverList: React.FC<DriverListProps> = (props) => {
+  const { onCreateClick } = props
+
   const url = `${baseUri}/drivers`
   const [drivers, setDrivers] = useState<Driver[]>([])
 
@@ -17,7 +23,10 @@ const DriverList: React.FC = () => {
 
   return (
     <>
-      <button className='bg-gradient-to-r from-green-700 from-[13%] via-yellow-300 via-[36%] to-red-600 to-60%'>
+      <button
+        onClick={onCreateClick}
+        className='bg-gradient-to-r from-green-700 from-[13%] via-yellow-300 via-[36%] to-red-600 to-60%'
+      >
         Create
       </button>
 
@@ -48,7 +57,10 @@ const DriverList: React.FC = () => {
         </tbody>
       </table>
 
-      <button className='w-full p-1 text-sm font-bold text-white bg-gradient-to-r from-green-700 from-[13%] via-yellow-300 via-[36%] to-red-600 to-60%'>
+      <button
+        onClick={onCreateClick}
+        className='w-full p-1 text-sm font-bold text-white bg-gradient-to-r from-green-700 from-[13%] via-yellow-300 via-[36%] to-red-600 to-60%'
+      >
         Create driver
       </button>
     </>
