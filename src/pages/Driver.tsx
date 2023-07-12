@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import DriverForm from '../components/DriverForm'
-import { Driver } from '../types/Driver'
+import DriverForm from '../components/driver/DriverForm'
+import { Driver } from '../types/types'
 import { baseUri } from '../utils/api'
-import DriverList from '../components/DriverList'
+import DriverList from '../components/driver/DriverList'
 
 const clearDriver: Driver = {
   name: '',

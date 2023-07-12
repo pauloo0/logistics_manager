@@ -1,10 +1,12 @@
 import React from 'react'
-import Driver from './pages/Driver'
+// import Driver from './pages/Driver'
+import Truck from './pages/Truck'
 
 const App: React.FC = () => {
   return (
     <>
-      <Driver />
+      {/* <Driver /> */}
+      <Truck />
     </>
   )
 }

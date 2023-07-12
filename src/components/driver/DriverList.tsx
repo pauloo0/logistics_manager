@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Driver } from '../types/Driver'
-import { baseUri } from '../utils/api'
+import { Driver } from '../../types/types'
+import { baseUri } from '../../utils/api'
 
 interface DriverListProps {
   onCreateClick: () => void
@@ -32,7 +32,6 @@ const DriverList: React.FC<DriverListProps> = (props) => {
 
       <table className='w-full'>
         <thead>
-          <tr></tr>
           <tr>
             <th className='text-left'>DriverID</th>
             <th className='text-left'>Driver Name</th>

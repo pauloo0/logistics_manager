@@ -1,5 +1,5 @@
 import React from 'react'
-import { Driver } from '../types/Driver'
+import { Driver } from '../types/types'
 import { FaChevronLeft } from 'react-icons/fa'
 
 interface DriverFormProps {
