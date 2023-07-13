@@ -1,5 +1,5 @@
 import React from 'react'
-import { Driver } from '../types/types'
+import { Driver } from '../../types/types'
 import { FaChevronLeft } from 'react-icons/fa'
 
 interface DriverFormProps {
@@ -19,14 +19,14 @@ const DriverForm: React.FC<DriverFormProps> = (props) => {
       <div className='flex justify-between w-full'>
         <button
           onClick={onGoBackClick}
-          className='flex items-center px-2 py-1 bg-slate-100 border border-slate-200 rounded-lg text-sm font-bold'
+          className='flex items-center px-2 py-1 text-sm font-bold border rounded-lg bg-slate-100 border-slate-200'
         >
           <FaChevronLeft className='mr-2' /> Go back
         </button>
       </div>
       <form
         onSubmit={onSubmit}
-        className='mt-12 w-full grid grid-cols-12 gap-6'
+        className='grid w-full grid-cols-12 gap-6 mt-12'
       >
         <div className='flex flex-col items-start justify-center col-span-full'>
           <label htmlFor='name'>Name</label>
@@ -63,17 +63,17 @@ const DriverForm: React.FC<DriverFormProps> = (props) => {
         </div>
         <div
           id='driverFormButtons'
-          className='col-span-2 w-full flex items-center space-x-4'
+          className='flex items-center w-full col-span-2 space-x-4'
         >
           <button
             type='submit'
-            className='p-2 bg-green-600 text-white tracking-wider rounded-lg font-bold w-full'
+            className='w-full p-2 font-bold tracking-wider text-white bg-green-600 rounded-lg'
           >
             Save
           </button>
           <button
             type='reset'
-            className='p-2 bg-slate-100 border border-slate-200 rounded-lg font-bold w-full'
+            className='w-full p-2 font-bold border rounded-lg bg-slate-100 border-slate-200'
             onClick={onCancelClick}
           >
             Cancel

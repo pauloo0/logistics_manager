@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Truck } from '../types/types'
+import { baseUri } from '../utils/api'
 import TruckList from '../components/truck/TruckList'
+import TruckForm from '../components/truck/TruckForm'
 
 const clearTruck: Truck = {
   plate: '',
@@ -17,10 +19,57 @@ const clearTruck: Truck = {
 
 const Truck: React.FC = () => {
   const [truck, setTruck] = useState<Truck>(clearTruck)
+  const [showForm, setShowForm] = useState<boolean>(false)
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setTruck({ ...truck, [name]: value })
+  }
+
+  const handleTruckSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+
+    const url = `${baseUri}/trucks`
+
+    const createTruck = async () => {
+      await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(truck),
+      })
+    }
+
+    createTruck()
+    setTruck(clearTruck)
+    setShowForm(false)
+  }
+
+  const handleCreateClick = () => {
+    setShowForm(true)
+  }
+  const handleGoBackClick = () => {
+    setShowForm(false)
+  }
+  const handleCancelClick = () => {
+    setTruck(clearTruck)
+    setShowForm(false)
+  }
 
   return (
     <div className='mx-auto w-[80vw]'>
-      <TruckList />
+      {showForm ? (
+        <TruckForm
+          truck={truck}
+          onInputChange={handleInputChange}
+          onSubmit={handleTruckSubmit}
+          onGoBackClick={handleGoBackClick}
+          onCancelClick={handleCancelClick}
+        />
+      ) : (
+        <TruckList onCreateClick={handleCreateClick} />
+      )}
     </div>
   )
 }
