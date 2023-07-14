@@ -4,6 +4,10 @@ import { baseUri } from '../utils/api'
 import TruckList from '../components/truck/TruckList'
 import TruckForm from '../components/truck/TruckForm'
 
+interface TruckProps {
+  showForm: boolean
+}
+
 const clearTruck: Truck = {
   plate: '',
   make: '',
@@ -17,9 +21,9 @@ const clearTruck: Truck = {
   available: true,
 }
 
-const Truck: React.FC = () => {
+const Truck: React.FC<TruckProps> = (props) => {
   const [truck, setTruck] = useState<Truck>(clearTruck)
-  const [showForm, setShowForm] = useState<boolean>(false)
+  const [showForm, setShowForm] = useState<boolean>(props.showForm)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
