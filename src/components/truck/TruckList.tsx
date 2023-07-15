@@ -4,13 +4,14 @@ import { baseUri } from '../../utils/api'
 
 interface TruckListProps {
   onCreateClick: () => void
+  trucks: Truck[]
 }
 
 const TruckList: React.FC<TruckListProps> = (props) => {
-  const { onCreateClick } = props
+  const { onCreateClick, trucks: fetchedTrucks } = props
 
   const url = `${baseUri}/trucks`
-  const [trucks, setTrucks] = useState<Truck[]>([])
+  const [trucks, setTrucks] = useState<Truck[]>(fetchedTrucks)
 
   useEffect(() => {
     const fetchTrucks = async () => {
