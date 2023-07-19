@@ -6,10 +6,21 @@ import { baseUri } from '../../utils/api'
 
 const TruckForm: React.FC = () => {
   const { id } = useParams()
-  const [truck, setTruck] = useState<Truck>()
+  const [truck, setTruck] = useState<Truck>({
+    make: '',
+    model: '',
+    plate: '',
+    year: 0,
+    km: 0,
+    buy_date: '',
+    last_maint: '',
+    next_maint_d: '',
+    next_maint_km: 0,
+    available: true,
+  })
 
   useEffect(() => {
-    const getTruck = async (id: number) => {
+    const getSingleTruck = async (id: number) => {
       const res = await fetch(`${baseUri}/trucks/${id}`)
       const data = await res.json()
 
@@ -17,9 +28,18 @@ const TruckForm: React.FC = () => {
     }
 
     if (id) {
-      getTruck(parseInt(id))
+      getSingleTruck(Number(id))
     }
   }, [id])
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+
+    setTruck({
+      ...truck,
+      [name]: value,
+    })
+  }
 
   return (
     <div className='flex flex-col items-start justify-center'>
@@ -42,6 +62,7 @@ const TruckForm: React.FC = () => {
             id='make'
             name='make'
             value={truck && truck.make}
+            onChange={(e) => handleInputChange(e)}
             className='w-full p-1 border-b border-slate-400'
           />
         </div>
@@ -52,6 +73,7 @@ const TruckForm: React.FC = () => {
             id='model'
             name='model'
             value={truck && truck.model}
+            onChange={(e) => handleInputChange(e)}
             className='w-full p-1 border-b border-slate-400'
           />
         </div>
@@ -62,6 +84,7 @@ const TruckForm: React.FC = () => {
             id='plate'
             name='plate'
             value={truck && truck.plate}
+            onChange={(e) => handleInputChange(e)}
             className='w-full p-1 border-b border-slate-400'
           />
         </div>
@@ -72,6 +95,7 @@ const TruckForm: React.FC = () => {
             id='year'
             name='year'
             value={truck && truck.year}
+            onChange={(e) => handleInputChange(e)}
             min={1900}
             className='w-full p-1 border-b border-slate-400'
           />
@@ -83,6 +107,7 @@ const TruckForm: React.FC = () => {
             id='km'
             name='km'
             value={truck && truck.km}
+            onChange={(e) => handleInputChange(e)}
             min={0}
             className='w-full p-1 border-b border-slate-400'
           />
@@ -94,6 +119,7 @@ const TruckForm: React.FC = () => {
             id='buy_date'
             name='buy_date'
             value={truck && truck.buy_date}
+            onChange={(e) => handleInputChange(e)}
             className='w-full p-1 border-b border-slate-400'
           />
         </div>
@@ -104,6 +130,7 @@ const TruckForm: React.FC = () => {
             id='last_maint'
             name='last_maint'
             value={truck && truck.last_maint}
+            onChange={(e) => handleInputChange(e)}
             className='w-full p-1 border-b border-slate-400'
           />
         </div>
@@ -114,6 +141,7 @@ const TruckForm: React.FC = () => {
             id='next_maint_d'
             name='next_maint_d'
             value={truck && truck.next_maint_d}
+            onChange={(e) => handleInputChange(e)}
             className='w-full p-1 border-b border-slate-400'
           />
         </div>
@@ -124,6 +152,7 @@ const TruckForm: React.FC = () => {
             id='next_maint_km'
             name='next_maint_km'
             value={truck && truck.next_maint_km}
+            onChange={(e) => handleInputChange(e)}
             className='w-full p-1 border-b border-slate-400'
           />
         </div>

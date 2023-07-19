@@ -27,15 +27,23 @@ export const createTruck = async ({ request }: ActionFunctionArgs) => {
     next_maint_km: data.get('next_maint_km'),
   }
 
-  console.log(submission)
+  await fetch(`${baseUri}/trucks`, {
+    method: 'POST',
+    body: JSON.stringify(submission),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
 
   return redirect('/trucks')
 }
 
 export const updateTruck = async ({ request }: ActionFunctionArgs) => {
   const data = await request.formData()
+  const id = new URLSearchParams(request.url).get('id')
 
   const submission = {
+    id: id,
     make: data.get('make'),
     model: data.get('model'),
     plate: data.get('plate'),
@@ -47,7 +55,13 @@ export const updateTruck = async ({ request }: ActionFunctionArgs) => {
     next_maint_km: data.get('next_maint_km'),
   }
 
-  console.log(submission)
+  await fetch(`${baseUri}/trucks/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(submission),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
 
   return redirect('/trucks')
 }
@@ -61,8 +75,6 @@ export const deleteTruck = async (id: number) => {
     status: res.status,
     truck: res.json(),
   }
-
-  console.log(data)
 
   return data
 }
