@@ -51,3 +51,18 @@ export const updateTruck = async ({ request }: ActionFunctionArgs) => {
 
   return redirect('/trucks')
 }
+
+export const deleteTruck = async (id: number) => {
+  const res = await fetch(`${baseUri}/trucks/${id}`, {
+    method: 'DELETE',
+  })
+  const data = {
+    message: 'Truck deleted successfully',
+    status: res.status,
+    truck: res.json(),
+  }
+
+  console.log(data)
+
+  return data
+}

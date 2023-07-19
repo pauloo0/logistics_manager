@@ -1,10 +1,17 @@
 import React from 'react'
 import { Truck } from '../../types/types'
-
+import { deleteTruck } from '../../functions/trucks'
 import { Link, useLoaderData } from 'react-router-dom'
 
 const TruckList: React.FC = () => {
   const trucks = useLoaderData() as Truck[]
+
+  const handleDelete = async (id: number | undefined) => {
+    if (!id) return
+
+    await deleteTruck(id)
+    window.location.reload()
+  }
 
   return (
     <>
@@ -48,6 +55,7 @@ const TruckList: React.FC = () => {
               Next Maintenance Km
             </th>
             <th className='px-2 py-1 text-left'>Available</th>
+            <th className='px-2 py-1 text-left'>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -64,6 +72,10 @@ const TruckList: React.FC = () => {
               <td>{truck.next_maint_d}</td>
               <td>{truck.next_maint_km}</td>
               <td>{truck.available ? 'Yes' : 'No'}</td>
+              <td className='flex space-x-2'>
+                <Link to={`/trucks/edit/${truck.id}`}>Edit</Link>
+                <button onClick={() => handleDelete(truck.id)}>Delete</button>
+              </td>
             </tr>
           ))}
         </tbody>
