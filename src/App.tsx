@@ -8,14 +8,15 @@ import {
 
 //pages
 import Driver from './pages/Driver'
-import Truck from './pages/Truck'
+import TruckList from './components/truck/TruckList'
+import TruckForm from './components/truck/TruckForm'
 
 //layouts
 import RootLayout from './layouts/RootLayout'
 import TruckLayout from './layouts/TruckLayout'
 
 //utils
-import { getTrucks, createTruck } from './utils/functions'
+import { getTrucks, createTruck, updateTruck } from './utils/functions'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,12 +24,9 @@ const router = createBrowserRouter(
       <Route index element={<h1>Home</h1>} />
       <Route path='drivers' element={<Driver />} />
       <Route path='trucks' element={<TruckLayout />}>
-        <Route index element={<Truck showForm={false} />} loader={getTrucks} />
-        <Route
-          path='create'
-          element={<Truck showForm={true} />}
-          action={createTruck}
-        />
+        <Route index element={<TruckList />} loader={getTrucks} />
+        <Route path='create' element={<TruckForm />} action={createTruck} />
+        <Route path='edit/:id' element={<TruckForm />} action={updateTruck} />
       </Route>
     </Route>
   )

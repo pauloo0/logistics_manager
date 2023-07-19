@@ -1,28 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Truck } from '../../types/types'
 import { FaChevronLeft } from 'react-icons/fa'
-import { Form } from 'react-router-dom'
+import { Form, Link, useParams } from 'react-router-dom'
+import { baseUri } from '../../utils/api'
 
-interface TruckFormProps {
-  truck: Truck
-  onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onSubmit: (e: React.FormEvent) => void
-  onGoBackClick: () => void
-  onCancelClick: () => void
-}
+const TruckForm: React.FC = () => {
+  const { id } = useParams()
+  const [truck, setTruck] = useState<Truck>()
 
-const TruckForm: React.FC<TruckFormProps> = (props) => {
-  const { truck, onInputChange, onSubmit, onGoBackClick, onCancelClick } = props
+  useEffect(() => {
+    const getTruck = async (id: number) => {
+      const res = await fetch(`${baseUri}/trucks/${id}`)
+      const data = await res.json()
+
+      setTruck(data)
+    }
+
+    if (id) {
+      getTruck(parseInt(id))
+    }
+  }, [id])
 
   return (
     <div className='flex flex-col items-start justify-center'>
       <div className='flex justify-between w-full'>
-        <button
-          onClick={onGoBackClick}
-          className='flex items-center px-2 py-1 text-sm font-bold border rounded-lg bg-slate-100 border-slate-200'
-        >
-          <FaChevronLeft className='mr-2' /> Go back
-        </button>
+        <Link to='/trucks'>
+          <button className='flex items-center px-2 py-1 text-sm font-bold border rounded-lg bg-slate-100 border-slate-200'>
+            <FaChevronLeft className='mr-2' /> Go back
+          </button>
+        </Link>
       </div>
       <Form
         method='POST'
@@ -35,8 +41,7 @@ const TruckForm: React.FC<TruckFormProps> = (props) => {
             type='text'
             id='make'
             name='make'
-            value={truck.make}
-            onChange={onInputChange}
+            value={truck && truck.make}
             className='w-full p-1 border-b border-slate-400'
           />
         </div>
@@ -46,8 +51,7 @@ const TruckForm: React.FC<TruckFormProps> = (props) => {
             type='text'
             id='model'
             name='model'
-            value={truck.model}
-            onChange={onInputChange}
+            value={truck && truck.model}
             className='w-full p-1 border-b border-slate-400'
           />
         </div>
@@ -57,8 +61,7 @@ const TruckForm: React.FC<TruckFormProps> = (props) => {
             type='text'
             id='plate'
             name='plate'
-            value={truck.plate}
-            onChange={onInputChange}
+            value={truck && truck.plate}
             className='w-full p-1 border-b border-slate-400'
           />
         </div>
@@ -68,9 +71,8 @@ const TruckForm: React.FC<TruckFormProps> = (props) => {
             type='number'
             id='year'
             name='year'
-            value={truck.year}
+            value={truck && truck.year}
             min={1900}
-            onChange={onInputChange}
             className='w-full p-1 border-b border-slate-400'
           />
         </div>
@@ -80,9 +82,8 @@ const TruckForm: React.FC<TruckFormProps> = (props) => {
             type='number'
             id='km'
             name='km'
-            value={truck.km}
+            value={truck && truck.km}
             min={0}
-            onChange={onInputChange}
             className='w-full p-1 border-b border-slate-400'
           />
         </div>
@@ -92,8 +93,7 @@ const TruckForm: React.FC<TruckFormProps> = (props) => {
             type='date'
             id='buy_date'
             name='buy_date'
-            value={truck.buy_date}
-            onChange={onInputChange}
+            value={truck && truck.buy_date}
             className='w-full p-1 border-b border-slate-400'
           />
         </div>
@@ -103,8 +103,7 @@ const TruckForm: React.FC<TruckFormProps> = (props) => {
             type='date'
             id='last_maint'
             name='last_maint'
-            value={truck.last_maint}
-            onChange={onInputChange}
+            value={truck && truck.last_maint}
             className='w-full p-1 border-b border-slate-400'
           />
         </div>
@@ -114,8 +113,7 @@ const TruckForm: React.FC<TruckFormProps> = (props) => {
             type='date'
             id='next_maint_d'
             name='next_maint_d'
-            value={truck.next_maint_d}
-            onChange={onInputChange}
+            value={truck && truck.next_maint_d}
             className='w-full p-1 border-b border-slate-400'
           />
         </div>
@@ -125,8 +123,7 @@ const TruckForm: React.FC<TruckFormProps> = (props) => {
             type='number'
             id='next_maint_km'
             name='next_maint_km'
-            value={truck.next_maint_km}
-            onChange={onInputChange}
+            value={truck && truck.next_maint_km}
             className='w-full p-1 border-b border-slate-400'
           />
         </div>
@@ -143,9 +140,8 @@ const TruckForm: React.FC<TruckFormProps> = (props) => {
           <button
             type='reset'
             className='w-full p-2 font-bold border rounded-lg bg-slate-100 border-slate-200'
-            onClick={onCancelClick}
           >
-            Cancel
+            Clear
           </button>
         </div>
       </Form>

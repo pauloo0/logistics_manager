@@ -1,35 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Truck } from '../../types/types'
-import { baseUri } from '../../utils/api'
 
-interface TruckListProps {
-  onCreateClick: () => void
-  trucks: Truck[]
-}
+import { Link, useLoaderData } from 'react-router-dom'
 
-const TruckList: React.FC<TruckListProps> = (props) => {
-  const { onCreateClick, trucks: fetchedTrucks } = props
-
-  const url = `${baseUri}/trucks`
-  const [trucks, setTrucks] = useState<Truck[]>(fetchedTrucks)
-
-  useEffect(() => {
-    const fetchTrucks = async () => {
-      const res = await fetch(url)
-      const data = await res.json()
-      setTrucks(data)
-    }
-    fetchTrucks()
-  }, [url])
+const TruckList: React.FC = () => {
+  const trucks = useLoaderData() as Truck[]
 
   return (
     <>
-      <button
-        onClick={onCreateClick}
-        className='bg-gradient-to-r from-green-700 from-[13%] via-yellow-300 via-[36%] to-red-600 to-60%'
-      >
-        Create
-      </button>
+      <Link to='/trucks/create'>
+        <button className='bg-gradient-to-r from-green-700 from-[13%] via-yellow-300 via-[36%] to-red-600 to-60%'>
+          Create
+        </button>
+      </Link>
 
       <table className='w-full'>
         <thead>
@@ -86,12 +69,11 @@ const TruckList: React.FC<TruckListProps> = (props) => {
         </tbody>
       </table>
 
-      <button
-        onClick={onCreateClick}
-        className='w-full p-1 text-sm font-bold bg-slate-200'
-      >
-        Create truck
-      </button>
+      <Link to='/trucks/create'>
+        <button className='w-full p-1 text-sm font-bold bg-slate-200'>
+          Create truck
+        </button>
+      </Link>
     </>
   )
 }
