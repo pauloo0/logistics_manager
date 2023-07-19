@@ -1,5 +1,9 @@
-import { redirect } from 'react-router-dom'
+//types
 import { Truck } from '../types/types'
+import type { ActionFunctionArgs } from 'react-router-dom'
+
+import { redirect } from 'react-router-dom'
+
 import { baseUri } from '../utils/api'
 
 export const getTrucks = async (): Promise<Truck[]> => {
@@ -8,7 +12,7 @@ export const getTrucks = async (): Promise<Truck[]> => {
   return res.json()
 }
 
-export const createTruck = async ({ request }: any) => {
+export const createTruck = async ({ request }: ActionFunctionArgs) => {
   const data = await request.formData()
 
   const submission = {
@@ -28,7 +32,7 @@ export const createTruck = async ({ request }: any) => {
   return redirect('/trucks')
 }
 
-export const updateTruck = async ({ request }: any) => {
+export const updateTruck = async ({ request }: ActionFunctionArgs) => {
   const data = await request.formData()
 
   const submission = {

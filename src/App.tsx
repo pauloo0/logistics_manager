@@ -16,7 +16,7 @@ import RootLayout from './layouts/RootLayout'
 import TruckLayout from './layouts/TruckLayout'
 
 //utils
-import { getTrucks, createTruck, updateTruck } from './utils/functions'
+import { getTrucks, createTruck, updateTruck } from './functions/trucks'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
