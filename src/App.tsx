@@ -15,7 +15,7 @@ import RootLayout from './layouts/RootLayout'
 import TruckLayout from './layouts/TruckLayout'
 
 //utils
-import { getTrucks } from './utils/functions'
+import { getTrucks, createTruck } from './utils/functions'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,7 +24,11 @@ const router = createBrowserRouter(
       <Route path='drivers' element={<Driver />} />
       <Route path='trucks' element={<TruckLayout />}>
         <Route index element={<Truck showForm={false} />} loader={getTrucks} />
-        <Route path='create' element={<Truck showForm={true} />} />
+        <Route
+          path='create'
+          element={<Truck showForm={true} />}
+          action={createTruck}
+        />
       </Route>
     </Route>
   )

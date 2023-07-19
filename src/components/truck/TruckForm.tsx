@@ -1,6 +1,7 @@
 import React from 'react'
 import { Truck } from '../../types/types'
 import { FaChevronLeft } from 'react-icons/fa'
+import { Form } from 'react-router-dom'
 
 interface TruckFormProps {
   truck: Truck
@@ -23,8 +24,9 @@ const TruckForm: React.FC<TruckFormProps> = (props) => {
           <FaChevronLeft className='mr-2' /> Go back
         </button>
       </div>
-      <form
-        onSubmit={onSubmit}
+      <Form
+        method='POST'
+        action='/trucks/create'
         className='grid w-full grid-cols-12 gap-6 mt-12'
       >
         <div className='flex flex-col items-start justify-center col-span-6'>
@@ -146,7 +148,7 @@ const TruckForm: React.FC<TruckFormProps> = (props) => {
             Cancel
           </button>
         </div>
-      </form>
+      </Form>
     </div>
   )
 }
