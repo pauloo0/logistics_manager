@@ -1,36 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Truck } from '../../types/types'
 import { FaChevronLeft } from 'react-icons/fa'
-import { Form, Link, useParams } from 'react-router-dom'
-import { baseUri } from '../../utils/api'
+import { Form, Link, useLoaderData } from 'react-router-dom'
+// import { baseUri } from '../../utils/api'
 
 const TruckForm: React.FC = () => {
-  const { id } = useParams()
-  const [truck, setTruck] = useState<Truck>({
-    make: '',
-    model: '',
-    plate: '',
-    year: 0,
-    km: 0,
-    buy_date: '',
-    last_maint: '',
-    next_maint_d: '',
-    next_maint_km: 0,
-    available: true,
-  })
-
-  useEffect(() => {
-    const getSingleTruck = async (id: number) => {
-      const res = await fetch(`${baseUri}/trucks/${id}`)
-      const data = await res.json()
-
-      setTruck(data)
-    }
-
-    if (id) {
-      getSingleTruck(Number(id))
-    }
-  }, [id])
+  const loaderTruck = useLoaderData() as Truck
+  const [truck, setTruck] = useState<Truck>(loaderTruck)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -51,8 +27,7 @@ const TruckForm: React.FC = () => {
         </Link>
       </div>
       <Form
-        method='POST'
-        action='/trucks/create'
+        method={truck ? 'PUT' : 'POST'}
         className='grid w-full grid-cols-12 gap-6 mt-12'
       >
         <div className='flex flex-col items-start justify-center col-span-6'>

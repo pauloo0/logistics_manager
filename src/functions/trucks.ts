@@ -12,6 +12,14 @@ export const getTrucks = async (): Promise<Truck[]> => {
   return res.json()
 }
 
+export const getSingleTruck = async ({
+  params,
+}: ActionFunctionArgs): Promise<Truck> => {
+  const res = await fetch(`${baseUri}/trucks/${params.id}`)
+
+  return res.json()
+}
+
 export const createTruck = async ({ request }: ActionFunctionArgs) => {
   const data = await request.formData()
 
@@ -38,12 +46,10 @@ export const createTruck = async ({ request }: ActionFunctionArgs) => {
   return redirect('/trucks')
 }
 
-export const updateTruck = async ({ request }: ActionFunctionArgs) => {
+export const updateTruck = async ({ request, params }: ActionFunctionArgs) => {
   const data = await request.formData()
-  const id = new URLSearchParams(request.url).get('id')
 
   const submission = {
-    id: id,
     make: data.get('make'),
     model: data.get('model'),
     plate: data.get('plate'),
@@ -55,7 +61,7 @@ export const updateTruck = async ({ request }: ActionFunctionArgs) => {
     next_maint_km: data.get('next_maint_km'),
   }
 
-  await fetch(`${baseUri}/trucks/${id}`, {
+  await fetch(`${baseUri}/trucks/${params.id}`, {
     method: 'PUT',
     body: JSON.stringify(submission),
     headers: {
