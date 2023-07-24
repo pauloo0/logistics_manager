@@ -5,14 +5,14 @@ import Navbar from '../components/Navbar'
 
 const RootLayout: React.FC = () => {
   return (
-    <>
-      <header>
+    <div className='font-rubik'>
+      <header className='bg-slate-900 text-slate-100'>
         <Navbar />
       </header>
-      <main>
+      <main className='my-8'>
         <Outlet />
       </main>
-    </>
+    </div>
   )
 }
 
