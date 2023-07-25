@@ -1,67 +1,74 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Driver } from '../../types/types'
-import { baseUri } from '../../utils/api'
+import { deleteDriver } from '../../functions/drivers'
+import { Link, useLoaderData } from 'react-router-dom'
+import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa'
 
-interface DriverListProps {
-  onCreateClick: () => void
-}
+const DriverList: React.FC = () => {
+  const drivers = useLoaderData() as Driver[]
 
-const DriverList: React.FC<DriverListProps> = (props) => {
-  const { onCreateClick } = props
+  const handleDelete = async (id: number | undefined) => {
+    if (!id) return
 
-  const url = `${baseUri}/drivers`
-  const [drivers, setDrivers] = useState<Driver[]>([])
-
-  useEffect(() => {
-    const fetchDrivers = async () => {
-      const res = await fetch(url)
-      const data = await res.json()
-      setDrivers(data)
-    }
-    fetchDrivers()
-  }, [url])
+    await deleteDriver(id)
+    window.location.reload()
+  }
 
   return (
     <>
-      <button
-        onClick={onCreateClick}
-        className='bg-gradient-to-r from-green-700 from-[13%] via-yellow-300 via-[36%] to-red-600 to-60%'
-      >
-        Create
-      </button>
+      <Link to='/drivers/create'>
+        <button className='flex items-center px-2 py-1 text-sm font-bold text-green-900 bg-green-500 border border-green-700 rounded-lg'>
+          <FaPlus className='mr-2' /> Create
+        </button>
+      </Link>
 
-      <table className='w-full'>
-        <thead>
-          <tr>
-            <th className='text-left'>DriverID</th>
-            <th className='text-left'>Driver Name</th>
-            <th className='text-left'>Birthday</th>
-            <th className='text-left'>Country</th>
-            <th className='text-left'>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {drivers.map((driver) => (
-            <tr key={driver.id}>
-              <td>{driver.id}</td>
-              <td>{driver.name}</td>
-              <td>{driver.birthday}</td>
-              <td>{driver.country}</td>
-              <td>
-                <button>Edit</button>
-                <button>Delete</button>
-              </td>
+      <div className='mt-6 overflow-x-auto rounded'>
+        <table className='w-full text-sm'>
+          <thead>
+            <tr className='bg-sky-700 text-slate-100'>
+              <th className='px-2 py-1 text-left border-r border-slate-100'>
+                Driver ID
+              </th>
+              <th className='px-2 py-1 text-left border-r border-slate-100'>
+                Driver Name
+              </th>
+              <th className='px-2 py-1 text-left border-r border-slate-100'>
+                Birthday
+              </th>
+              <th className='px-2 py-1 text-left border-r border-slate-100'>
+                Country
+              </th>
+              <th className='px-2 py-1 text-left border-r border-slate-100'>
+                Actions
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {drivers.map((driver) => (
+              <tr key={driver.id}>
+                <td className='px-2 py-1 text-left'>{driver.id}</td>
+                <td className='px-2 py-1 text-left'>{driver.name}</td>
+                <td className='px-2 py-1 text-left'>{driver.birthday}</td>
+                <td className='px-2 py-1 text-left'>{driver.country}</td>
+                <td className='flex items-center px-2 py-1 justify-evenly'>
+                  <Link to={`/drivers/edit/${driver.id}`}>
+                    <FaEdit className='text-amber-500' />
+                  </Link>
+                  <button onClick={() => handleDelete(driver.id)}>
+                    <FaTrash className='text-red-500' />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-      <button
-        onClick={onCreateClick}
-        className='w-full p-1 text-sm font-bold text-white bg-gradient-to-r from-green-700 from-[13%] via-yellow-300 via-[36%] to-red-600 to-60%'
-      >
-        Create driver
-      </button>
+      <Link to='/drivers/create'>
+        <button className='w-full p-1 text-sm font-bold bg-slate-200'>
+          Create driver
+        </button>
+      </Link>
     </>
   )
 }

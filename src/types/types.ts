@@ -3,6 +3,7 @@ export type Driver = {
   name: string
   birthday: string
   country: string
+  on_trip?: boolean
 }
 
 export type Truck = {
