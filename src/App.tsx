@@ -11,9 +11,11 @@ import TruckList from './components/truck/TruckList'
 import TruckForm from './components/truck/TruckForm'
 import DriverList from './components/driver/DriverList'
 import DriverForm from './components/driver/DriverForm'
+import Dashboard from './components/home/Dashboard'
 
 //layouts
 import RootLayout from './layouts/RootLayout'
+import HomeLayout from './layouts/HomeLayout'
 import TruckLayout from './layouts/TruckLayout'
 import DriverLayout from './layouts/DriverLayout'
 
@@ -34,7 +36,9 @@ import {
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<RootLayout />}>
-      <Route index element={<h1>Home</h1>} />
+      <Route path='/' element={<HomeLayout />}>
+        <Route index element={<Dashboard />} />
+      </Route>
       <Route path='drivers' element={<DriverLayout />}>
         <Route index element={<DriverList />} loader={getDrivers} />
         <Route path='create' element={<DriverForm />} action={createDriver} />
