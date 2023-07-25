@@ -9,7 +9,7 @@ const RootLayout: React.FC = () => {
       <header className='bg-slate-900 text-slate-100'>
         <Navbar />
       </header>
-      <main className='my-8'>
+      <main className='mt-16 mb-8'>
         <Outlet />
       </main>
     </div>
