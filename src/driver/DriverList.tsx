@@ -1,6 +1,6 @@
 import React from 'react'
-import { Driver } from '../../types/types'
-import { deleteDriver } from '../../functions/drivers'
+import { Driver } from '../types/types'
+import { deleteDriver } from '../functions/drivers'
 import { Link, useLoaderData } from 'react-router-dom'
 import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa'
 

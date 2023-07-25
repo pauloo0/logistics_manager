@@ -7,10 +7,12 @@ import {
 } from 'react-router-dom'
 
 //pages
+import NotFound from './pages/NotFound'
+
 import TruckList from './components/truck/TruckList'
 import TruckForm from './components/truck/TruckForm'
-import DriverList from './components/driver/DriverList'
-import DriverForm from './components/driver/DriverForm'
+import DriverList from './driver/DriverList'
+import DriverForm from './driver/DriverForm'
 import Dashboard from './components/home/Dashboard'
 
 //layouts
@@ -35,31 +37,34 @@ import {
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<RootLayout />}>
-      <Route path='/' element={<HomeLayout />}>
-        <Route index element={<Dashboard />} />
+    <>
+      <Route path='/' element={<RootLayout />} errorElement={<NotFound />}>
+        <Route path='/' element={<HomeLayout />}>
+          <Route index element={<Dashboard />} />
+        </Route>
+        <Route path='drivers' element={<DriverLayout />}>
+          <Route index element={<DriverList />} loader={getDrivers} />
+          <Route path='create' element={<DriverForm />} action={createDriver} />
+          <Route
+            path='edit/:id'
+            element={<DriverForm />}
+            loader={getSingleDriver}
+            action={updateDriver}
+          />
+        </Route>
+        <Route path='trucks' element={<TruckLayout />}>
+          <Route index element={<TruckList />} loader={getTrucks} />
+          <Route path='create' element={<TruckForm />} action={createTruck} />
+          <Route
+            path='edit/:id'
+            element={<TruckForm />}
+            loader={getSingleTruck}
+            action={updateTruck}
+          />
+        </Route>
       </Route>
-      <Route path='drivers' element={<DriverLayout />}>
-        <Route index element={<DriverList />} loader={getDrivers} />
-        <Route path='create' element={<DriverForm />} action={createDriver} />
-        <Route
-          path='edit/:id'
-          element={<DriverForm />}
-          loader={getSingleDriver}
-          action={updateDriver}
-        />
-      </Route>
-      <Route path='trucks' element={<TruckLayout />}>
-        <Route index element={<TruckList />} loader={getTrucks} />
-        <Route path='create' element={<TruckForm />} action={createTruck} />
-        <Route
-          path='edit/:id'
-          element={<TruckForm />}
-          loader={getSingleTruck}
-          action={updateTruck}
-        />
-      </Route>
-    </Route>
+      <Route path='*' element={<NotFound />}></Route>
+    </>
   )
 )
 

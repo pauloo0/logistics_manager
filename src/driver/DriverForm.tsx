@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Driver } from '../../types/types'
+import { Driver } from '../types/types'
 import { FaChevronLeft } from 'react-icons/fa'
 import { Form, Link, useLoaderData } from 'react-router-dom'
 
