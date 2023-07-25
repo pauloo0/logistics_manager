@@ -39,6 +39,9 @@ const DriverList: React.FC = () => {
                 Country
               </th>
               <th className='px-2 py-1 text-left border-r border-slate-100'>
+                Available
+              </th>
+              <th className='px-2 py-1 text-left border-r border-slate-100'>
                 Actions
               </th>
             </tr>
@@ -50,6 +53,9 @@ const DriverList: React.FC = () => {
                 <td className='px-2 py-1 text-left'>{driver.name}</td>
                 <td className='px-2 py-1 text-left'>{driver.birthday}</td>
                 <td className='px-2 py-1 text-left'>{driver.country}</td>
+                <td className='px-2 py-1 text-left'>
+                  {driver.on_trip ? 'No' : 'Yes'}
+                </td>
                 <td className='flex items-center px-2 py-1 justify-evenly'>
                   <Link to={`/drivers/edit/${driver.id}`}>
                     <FaEdit className='text-amber-500' />
