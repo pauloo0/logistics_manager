@@ -44,6 +44,16 @@ const Navbar: React.FC = () => {
         >
           Trucks
         </NavLink>
+        <NavLink
+          to='/trips'
+          className={({ isActive }) =>
+            `px-2 py-3 tracking-wide hover:text-sky-400 font-medium ${
+              isActive ? 'text-sky-400' : ''
+            }`
+          }
+        >
+          Trips
+        </NavLink>
       </div>
     </nav>
   )

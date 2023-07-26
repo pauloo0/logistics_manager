@@ -9,17 +9,19 @@ import {
 //pages
 import NotFound from './pages/NotFound'
 
-import TruckList from './components/truck/TruckList'
-import TruckForm from './components/truck/TruckForm'
-import DriverList from './driver/DriverList'
-import DriverForm from './driver/DriverForm'
-import Dashboard from './components/home/Dashboard'
+import Dashboard from './pages/home/Dashboard'
+import TruckList from './pages/truck/TruckList'
+import TruckForm from './pages/truck/TruckForm'
+import DriverList from './pages/driver/DriverList'
+import DriverForm from './pages/driver/DriverForm'
+import TripForm from './pages/trip/TripForm'
 
 //layouts
 import RootLayout from './layouts/RootLayout'
 import HomeLayout from './layouts/HomeLayout'
 import TruckLayout from './layouts/TruckLayout'
 import DriverLayout from './layouts/DriverLayout'
+import TripLayout from './layouts/TripLayout'
 
 //utils
 import {
@@ -61,6 +63,10 @@ const router = createBrowserRouter(
             loader={getSingleTruck}
             action={updateTruck}
           />
+        </Route>
+        <Route path='trips' element={<TripLayout />}>
+          <Route index element={<TripForm />} />
+          <Route path='create' element={<TripForm />} />
         </Route>
       </Route>
       <Route path='*' element={<NotFound />}></Route>
