@@ -15,6 +15,7 @@ import TruckForm from './pages/truck/TruckForm'
 import DriverList from './pages/driver/DriverList'
 import DriverForm from './pages/driver/DriverForm'
 import TripForm from './pages/trip/TripForm'
+import TripList from './pages/trip/TripList'
 
 //layouts
 import RootLayout from './layouts/RootLayout'
@@ -36,6 +37,12 @@ import {
   createDriver,
   updateDriver,
 } from './functions/drivers'
+import {
+  getTrips,
+  getSingleTrip,
+  createTrip,
+  updateTrip,
+} from './functions/trips'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -65,8 +72,14 @@ const router = createBrowserRouter(
           />
         </Route>
         <Route path='trips' element={<TripLayout />}>
-          <Route index element={<TripForm />} />
-          <Route path='create' element={<TripForm />} />
+          <Route index element={<TripList />} loader={getTrips} />
+          <Route path='create' element={<TripForm />} action={createTrip} />
+          <Route
+            path='edit/:id'
+            element={<TripForm />}
+            loader={getSingleTrip}
+            action={updateTrip}
+          />
         </Route>
       </Route>
       <Route path='*' element={<NotFound />}></Route>

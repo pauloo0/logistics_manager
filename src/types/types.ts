@@ -19,3 +19,15 @@ export type Truck = {
   next_maint_km: number
   available?: boolean
 }
+
+export type Trip = {
+  id?: number
+  driverId: number
+  truckId: number
+  start: string
+  end: string
+  km: number
+  from: string
+  to: string
+  cargo: string
+}
