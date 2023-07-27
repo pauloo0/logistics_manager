@@ -1,5 +1,5 @@
 //types
-import { Trip } from '../types/types'
+import { Trip, Truck } from '../types/types'
 import type { ActionFunctionArgs } from 'react-router-dom'
 
 import { redirect } from 'react-router-dom'
@@ -22,6 +22,11 @@ export const getSingleTrip = async ({
 
 export const createTrip = async ({ request }: ActionFunctionArgs) => {
   const data = await request.formData()
+
+  let truckData = await getTruckById(Number(data.get('truckId')))
+  truckData = await addKmToTruck(truckData, Number(data.get('km')))
+  truckData = await setUnavailableIfKmOverdue(truckData)
+  await updateTruck(truckData)
 
   const submission = {
     driverId: data.get('driverId'),
@@ -81,4 +86,32 @@ export const deleteTrip = async (id: number) => {
   }
 
   return data
+}
+
+const getTruckById = async (id: number): Promise<Truck> => {
+  const res = await fetch(`${baseUri}/trucks/${id}`)
+
+  return res.json()
+}
+
+const addKmToTruck = async (truck: Truck, km: number) => {
+  truck.km += km
+  return truck
+}
+
+const setUnavailableIfKmOverdue = async (truck: Truck) => {
+  if (truck.km >= truck.next_maint_km) {
+    truck.available = false
+  }
+  return truck
+}
+
+const updateTruck = async (truck: Truck) => {
+  await fetch(`${baseUri}/trucks/${truck.id}`, {
+    method: 'PUT',
+    body: JSON.stringify(truck),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
 }
