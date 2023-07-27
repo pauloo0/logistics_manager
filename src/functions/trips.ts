@@ -22,11 +22,7 @@ export const getSingleTrip = async ({
 
 export const createTrip = async ({ request }: ActionFunctionArgs) => {
   const data = await request.formData()
-
-  let truckData = await getTruckById(Number(data.get('truckId')))
-  truckData = await addKmToTruck(truckData, Number(data.get('km')))
-  truckData = await setUnavailableIfKmOverdue(truckData)
-  await updateTruck(truckData)
+  await handleTruck(data)
 
   const submission = {
     driverId: data.get('driverId'),
@@ -52,6 +48,7 @@ export const createTrip = async ({ request }: ActionFunctionArgs) => {
 
 export const updateTrip = async ({ request, params }: ActionFunctionArgs) => {
   const data = await request.formData()
+  await handleTruck(data)
 
   const submission = {
     driverId: data.get('driverId'),
@@ -86,6 +83,13 @@ export const deleteTrip = async (id: number) => {
   }
 
   return data
+}
+
+const handleTruck = async (data: FormData) => {
+  let truckData = await getTruckById(Number(data.get('truckId')))
+  truckData = await addKmToTruck(truckData, Number(data.get('km')))
+  truckData = await setUnavailableIfKmOverdue(truckData)
+  await updateTruck(truckData)
 }
 
 const getTruckById = async (id: number): Promise<Truck> => {
