@@ -1,8 +1,8 @@
 import React from 'react'
 import { Truck } from '../../types/types'
-import { deleteTruck } from '../../functions/trucks'
+import { deleteTruck, repairAndUpdateTruck } from '../../functions/trucks'
 import { Link, useLoaderData } from 'react-router-dom'
-import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa'
+import { FaEdit, FaPlus, FaTrash, FaWrench } from 'react-icons/fa'
 
 const TruckList: React.FC = () => {
   const trucks = useLoaderData() as Truck[]
@@ -11,6 +11,11 @@ const TruckList: React.FC = () => {
     if (!id) return
 
     await deleteTruck(id)
+    window.location.reload()
+  }
+
+  const handleRepair = async (truck: Truck) => {
+    await repairAndUpdateTruck(truck)
     window.location.reload()
   }
 
@@ -85,6 +90,11 @@ const TruckList: React.FC = () => {
                   <button onClick={() => handleDelete(truck.id)}>
                     <FaTrash className='text-red-500' />
                   </button>
+                  {!truck.available && (
+                    <button onClick={() => handleRepair(truck)}>
+                      <FaWrench className='text-blue-500' />
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

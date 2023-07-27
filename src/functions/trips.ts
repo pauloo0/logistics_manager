@@ -5,6 +5,7 @@ import type { ActionFunctionArgs } from 'react-router-dom'
 import { redirect } from 'react-router-dom'
 
 import { baseUri } from '../utils/api'
+import { getTruckById } from './trucks'
 
 export const getTrips = async (): Promise<Trip[]> => {
   const res = await fetch(`${baseUri}/trips`)
@@ -90,12 +91,6 @@ const handleTruck = async (data: FormData) => {
   truckData = await addKmToTruck(truckData, Number(data.get('km')))
   truckData = await setUnavailableIfKmOverdue(truckData)
   await updateTruck(truckData)
-}
-
-const getTruckById = async (id: number): Promise<Truck> => {
-  const res = await fetch(`${baseUri}/trucks/${id}`)
-
-  return res.json()
 }
 
 const addKmToTruck = async (truck: Truck, km: number) => {

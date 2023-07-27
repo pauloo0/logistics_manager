@@ -84,3 +84,26 @@ export const deleteTruck = async (id: number) => {
 
   return data
 }
+
+export const getTruckById = async (id: number): Promise<Truck> => {
+  const res = await fetch(`${baseUri}/trucks/${id}`)
+
+  return res.json()
+}
+
+export const repairAndUpdateTruck = async (truck: Truck) => {
+  truck.available = true
+  truck.last_maint = new Date().toISOString().slice(0, 10)
+  truck.next_maint_d = new Date(new Date().setDate(new Date().getDate() + 365))
+    .toISOString()
+    .slice(0, 10)
+  truck.next_maint_km = truck.km + 10000
+
+  await fetch(`${baseUri}/trucks/${truck.id}`, {
+    method: 'PUT',
+    body: JSON.stringify(truck),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+}
