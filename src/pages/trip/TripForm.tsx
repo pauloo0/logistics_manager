@@ -28,7 +28,11 @@ const TripForm: React.FC = () => {
       const res = await fetch(`${baseUri}/trucks`)
       const data = await res.json()
 
-      setTrucks(data)
+      const filteredTrucks = data.filter(
+        (truck: Truck) => truck.available === true
+      )
+
+      setTrucks(filteredTrucks)
     }
 
     getTrucks()
